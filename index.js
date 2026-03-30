@@ -15,7 +15,7 @@ const CHANNEL_IDS = [
   "1438352989067808788",
 ];
 
-const INTERVAL_MS = 2 * 60 * 60 * 1000;
+const INTERVAL_MS = 5 * 60 * 60 * 1000;
 
 const MESSAGE = `🚨 ATENÇÃO! 🚨
 

@@ -15,20 +15,22 @@ const CHANNEL_IDS = [
   "1438352989067808788",
 ];
 
+// ⏱️ Intervalo de envio (5 horas)
 const INTERVAL_MS = 5 * 60 * 60 * 1000;
 
-const MESSAGE = `🚨 ATENÇÃO! 🚨
+// ⏱️ Tempo pra deletar (1 hora)
+const DELETE_AFTER_MS = 60 * 60 * 1000;
 
-Todas as trocas e vendas devem ser realizadas EXCLUSIVAMENTE no canal:
+const MESSAGE = `# 🚨 ATENÇÃO 🚨
 
-👉 <#1438205342449270874>
+**Todas as trocas e vendas devem ser realizadas EXCLUSIVAMENTE no canal:**
 
-💜 Isso garante mais segurança para todos
-💜 Evita golpes e problemas nas negociações
+**👉 <#1438205342449270874>**
 
-⚠️ Qualquer negociação feita fora desse canal será por sua conta e risco.
+**💜 Isso garante mais segurança para todos**
+**💜 Evita golpes e problemas nas negociações**
 
-Respeite as regras e mantenha o servidor organizado!`;
+**Respeite as regras e mantenha o servidor organizado!**`;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -40,8 +42,20 @@ async function sendReminders() {
         console.error(`[ERROR] Channel not found: ${channelId}`);
         continue;
       }
-      await channel.send(MESSAGE);
+
+      const msg = await channel.send(MESSAGE);
       console.log(`[OK] Message sent to channel ${channelId}`);
+
+      // 🔥 AUTO DELETE DEPOIS DE 1 HORA
+      setTimeout(async () => {
+        try {
+          await msg.delete();
+          console.log(`[OK] Message deleted in channel ${channelId}`);
+        } catch (err) {
+          console.error(`[ERROR] Failed to delete message in ${channelId}:`, err.message);
+        }
+      }, DELETE_AFTER_MS);
+
     } catch (err) {
       console.error(`[ERROR] Failed to send to channel ${channelId}:`, err.message);
     }

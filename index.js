@@ -15,11 +15,11 @@ const CHANNEL_IDS = [
   "1438352989067808788",
 ];
 
-// ⏱️ Intervalo de envio (5 horas)
-const INTERVAL_MS = 5 * 60 * 60 * 1000;
+// ⏱️ Intervalo de envio (1 hora)
+const INTERVAL_MS = 60 * 60 * 1000;
 
-// ⏱️ Tempo pra deletar (1 hora)
-const DELETE_AFTER_MS = 60 * 60 * 1000;
+// ⏱️ Tempo pra deletar (30 minutos)
+const DELETE_AFTER_MS = 30 * 60 * 1000;
 
 const MESSAGE = `# 🚨 ATENÇÃO 🚨
 
@@ -46,7 +46,7 @@ async function sendReminders() {
       const msg = await channel.send(MESSAGE);
       console.log(`[OK] Message sent to channel ${channelId}`);
 
-      // 🔥 AUTO DELETE DEPOIS DE 1 HORA
+      // 🔥 AUTO DELETE DEPOIS DE 30 MINUTOS
       setTimeout(async () => {
         try {
           await msg.delete();
